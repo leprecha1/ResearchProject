@@ -98,9 +98,25 @@ def admin(request, cookie):
 @login_required(login_url='/login/')
 @user_passes_test(lambda u: u.is_staff, login_url='/login/')
 def research_edit(request, cookie):
-	print request.path
-    	return render("edit_research.html", {
-    	}, context_instance=RequestContext(request))
+    research_id = re.sub(r"\/research\/",'', request.path)
+    research_id = re.sub(r"\/edit",'', research_id)
+    if request.POST:
+        frm_dict = request.POST
+	edit_resear = research.objects.get(id=research_id)
+        edit_resear = research(title = frm_dict['title'],
+                              description = frm_dict['description'],
+                              start_at = frm_dict['start_at'],
+                              finish_at = frm_dict['finish_at'],
+                              status = frm_dict['status'],
+			      publish = frm_dict['publish'])
+        edit_resear.save()
+        return HttpResponseRedirect('/research')
+    else:
+        frm = researchForm()
+
+    return render("edit_research.html", {
+		"research": research.objects.get(id=research_id)
+    }, context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
 @user_passes_test(lambda u: u.is_staff, login_url='/login/')

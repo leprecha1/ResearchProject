@@ -127,7 +127,8 @@ def research_new(request):
                               description = frm_dict['description'],
                               start_at = frm_dict['start_at'],
                               finish_at = frm_dict['finish_at'],
-                              status = frm_dict['status'])
+                              status = frm_dict['status'],
+			      publish = frm_dict['publish'])
         new_resear.save()
         return HttpResponseRedirect('/research')
     else:

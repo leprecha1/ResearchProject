@@ -21,12 +21,18 @@ class research(models.Model):
         ('X', 'Expired'),
     )
 
+    PUBLISH_CHOICES = (
+    	('T', 'Publish'),
+        ('F', 'Not publish now'),
+    )
+
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=30)
     start_at = models.DateField()
     finish_at = models.DateField()
     status = models.CharField(max_length=4, choices=STATUS_CHOICES)
     count = models.IntegerField(default=0)
+    publish = models.CharField(max_length=4, choices=PUBLISH_CHOICES)
     # TODO include a combobox to make possible for admin create more admins
     # python code have a permission type for it.
 

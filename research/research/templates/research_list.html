@@ -97,8 +97,9 @@
                 <th style="width:25%;">Title</th>
                 <th style="width:3%;">Count*</th>
                 <th style="width:20%;">Status</th>
+                <th style="width:20%;">Published</th>
                 <th style="width:20%;">Expiration date</th>
-                <th style="width:10%;">Edit</th>
+                <th style="width:5%;">Edit</th>
                 <th style="width:10%;">Remove</th>
             </tr>
         </thead>
@@ -120,6 +121,10 @@
                         {% if research.status == "A" %} Available {% endif %}
                         {% if research.status == "X" %} Expired {% endif %}
                         {% if research.status == "E" %} Editing {% endif %}
+                    </td>
+                    <td>
+                        {% if research.publish == "T" %} Yes {% endif %}
+                        {% if research.publish == "F" %} No {% endif %}
                     </td>
                     <td>
                         <a href="/research/{{ research.id }}">{{ research.finish_at }}</a>

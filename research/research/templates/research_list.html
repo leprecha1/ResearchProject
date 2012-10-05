@@ -154,6 +154,7 @@
         </tfoot>
         <tbody>
             {% for research in list_research %}
+		{% if research.publish == "T"%}
                 <tr>
                     <td>
                         <a href="/research/{{ research.id }}">{{ research.title }}</a>
@@ -170,6 +171,7 @@
                         <a href="/research/{{ research.id }}">{{ research.finish_at }}</a>
                     </td>
                 </tr>
+	    {% endif %}
             {% endfor %}
         </tbody>
     {% endif %}

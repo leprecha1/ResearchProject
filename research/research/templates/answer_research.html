@@ -82,7 +82,7 @@
 
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
-        <h1>Research list</h1>
+        <h1>{{ research.title }}</h1>
         <p>You can choose one of these research to answer.</p>
 	{% if user.is_staff %}
 		<p><input type="button" onClick='location.href="/research/new"' class="btn btn-primary btn-large" value="Add new research &raquo;"></p>

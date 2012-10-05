@@ -17,6 +17,8 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 
+import re
+
 # from django.contrib.auth.models import User
 # adding users in django: python manage.py shell
 # user = User.objects.create_user('admin', 'admin@admin.com', '123456')
@@ -96,12 +98,23 @@ def admin(request, cookie):
 @login_required(login_url='/login/')
 @user_passes_test(lambda u: u.is_staff, login_url='/login/')
 def research_edit(request, cookie):
+	print request.path
     	return render("edit_research.html", {
     	}, context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def research_delete(request):
+	research_id = re.sub(r"\/research\/",'', request.path)
+	research_id = re.sub(r"\/delete",'', research_id)
+	research.objects.get(id=research_id).delete()
+	return HttpResponseRedirect('/research')
+
+@login_required(login_url='/login/')
 def research_answer(request):
+	research_id = int(re.sub(r"\/research\/",'', request.path))
     	return render("answer_research.html", {
+		"research": research.objects.get(id=research_id)
     	}, context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')

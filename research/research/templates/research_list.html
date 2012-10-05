@@ -1,0 +1,194 @@
+{% load i18n %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Research project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/images/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/images/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/images/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/images/apple-touch-icon-57-precomposed.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Research Project</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="/home/{{user}}">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li class="dropdown">
+              {% if user.is_staff %}
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin options<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/research/new">New research</a></li>
+                  <li><a href="/research">Research's list</a></li>
+                </ul>
+              {% else %}
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/research">Research's list</a></li>
+                </ul>
+              {% endif %}
+              </li>
+            </ul>
+            <div class="navbar-form pull-right">
+            {% csrf_token %}
+	    {{ user }}
+            <input type="button" onClick='location.href="/logout/"' class="btn" value="Logout">
+            </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>Research list</h1>
+        <p>You can choose one of these research to answer.</p>
+	{% if user.is_staff %}
+		<p><input type="button" onClick='location.href="/research/new"' class="btn btn-primary btn-large" value="Add new research &raquo;"></p>
+	{% endif %}	
+
+    <br>
+
+    <table class="table table-bordered table-striped table-condensed" width="50%">
+        {% if user.is_staff %}
+        <thead>
+            <tr>
+                <th style="width:25%;">Title</th>
+                <th style="width:5%;">Count*</th>
+                <th style="width:20%;">Status</th>
+                <th style="width:20%;">Expiration date</th>
+                <th style="width:10%;">Edit</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for research in list_research %}
+                <tr>
+                    <td>
+                        <a href="/research">{{ research.title }}</a>
+                    </td>
+                    <td>
+                        {{ research.count }} 
+                    </td>
+                    <td>
+                        {% if research.status == "A" %} Available {% endif %}
+                        {% if research.status == "X" %} Expired {% endif %}
+                        {% if research.status == "E" %} Editing {% endif %}
+                    </td>
+                    <td>
+                        <a href="/research">{{ research.finish_at }}</a>
+                    </td>
+                    <td>
+                        <a href="/research/{{ research.id }}/edit">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        {% else %}
+        <thead>
+            <tr>
+                <th style="width:25%;">Title</th>
+                <th style="width:5%;">Count*</th>
+                <th style="width:25%;">Status</th>
+                <th style="width:25%;">Expiration date</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="6"></td>
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for research in list_research %}
+                <tr>
+                    <td>
+                        <a href="/research">{{ research.title }}</a>
+                    </td>
+                    <td>
+                        {{ research.count }} 
+                    </td>
+                    <td>
+                        {% if research.status == "A" %} Available {% endif %}
+                        {% if research.status == "X" %} Expired {% endif %}
+                        {% if research.status == "E" %} Editing {% endif %}
+                    </td>
+                    <td>
+                        <a href="/research">{{ research.finish_at }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    {% endif %}
+    </table>
+    * Count number shows how many people had already answer that research 
+      <!-- Example row of columns -->
+    </div>
+      <hr>
+
+      <footer>
+      <center> <p>&copy; Company 2012</p> </center>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap-transition.js"></script>
+    <script src="../assets/js/bootstrap-alert.js"></script>
+    <script src="../assets/js/bootstrap-modal.js"></script>
+    <script src="../assets/js/bootstrap-dropdown.js"></script>
+    <script src="../assets/js/bootstrap-scrollspy.js"></script>
+    <script src="../assets/js/bootstrap-tab.js"></script>
+    <script src="../assets/js/bootstrap-tooltip.js"></script>
+    <script src="../assets/js/bootstrap-popover.js"></script>
+    <script src="../assets/js/bootstrap-button.js"></script>
+    <script src="../assets/js/bootstrap-collapse.js"></script>
+    <script src="../assets/js/bootstrap-carousel.js"></script>
+    <script src="../assets/js/bootstrap-typeahead.js"></script>
+
+  </body>
+</html>
+{% endblock content %}

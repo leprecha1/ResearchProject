@@ -95,6 +95,17 @@ def admin(request, cookie):
 
 @login_required(login_url='/login/')
 @user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def research_edit(request, cookie):
+    	return render("edit_research.html", {
+    	}, context_instance=RequestContext(request))
+
+@login_required(login_url='/login/')
+def research_answer(request):
+    	return render("answer_research.html", {
+    	}, context_instance=RequestContext(request))
+
+@login_required(login_url='/login/')
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
 def research_new(request):
     lst_research = list(research.objects.all())
     if request.POST:

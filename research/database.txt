@@ -3,11 +3,10 @@ create database researchproj;
 CTRL-D
 (If we already have some tables in database, drop them all)
 python manage.py syncdb
-py manage.py  schemamigration account --initial
+python manage.py schemamigration account --initial
 python manage.py migrate
 python manage.py shell
 from django.contrib.auth.models import User
 user = User.objects.create_user('admin', 'admin@admin.com', '123456')
 user.is_staff = True
 user.save()
-

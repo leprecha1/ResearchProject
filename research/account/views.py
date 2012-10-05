@@ -101,14 +101,12 @@ def research_edit(request, cookie):
     research_id = re.sub(r"\/edit",'', research_id)
     if request.POST:
         frm_dict = request.POST
-	edit_resear = research.objects.get(id=research_id)
-        edit_resear = research(title = frm_dict['title'],
-                              description = frm_dict['description'],
-                              start_at = frm_dict['start_at'],
-                              finish_at = frm_dict['finish_at'],
-                              status = frm_dict['status'],
-			      publish = frm_dict['publish'])
-        edit_resear.save()
+        edit_resear = research.objects.filter(id=research_id).update(title = frm_dict['title'],
+						       description = frm_dict['description'],
+   						       start_at = frm_dict['start_at'],
+						       finish_at = frm_dict['finish_at'],
+						       status = frm_dict['status'],
+						       publish = frm_dict['publish'])
         return HttpResponseRedirect('/research')
     else:
 	

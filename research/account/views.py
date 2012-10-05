@@ -4,6 +4,7 @@ from account.models import research
 from account.forms import loginForm
 from account.forms import signupForm
 
+from django import forms
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.shortcuts import render_to_response as render
@@ -24,8 +25,6 @@ import re
 # user = User.objects.create_user('admin', 'admin@admin.com', '123456')
 # user.is_staff = True
 # user.save()
-
-actors.objects.all()
 
 class researchForm(ModelForm):
     class Meta:
@@ -112,10 +111,13 @@ def research_edit(request, cookie):
         edit_resear.save()
         return HttpResponseRedirect('/research')
     else:
-        frm = researchForm()
+	
+	edit_resear = research.objects.get(id=research_id)
+	frm = researchForm(instance=edit_resear) 
 
     return render("edit_research.html", {
-		"research": research.objects.get(id=research_id)
+		"research": research.objects.get(id=research_id),
+		"frm": frm,
     }, context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')

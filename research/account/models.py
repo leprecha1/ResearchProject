@@ -26,7 +26,6 @@ class research(models.Model):
     start_at = models.DateField()
     finish_at = models.DateField()
     status = models.CharField(max_length=4, choices=STATUS_CHOICES)
-    questions = models.CharField(max_length=30, default="NULL")
     count = models.IntegerField(default=0)
     # TODO include a combobox to make possible for admin create more admins
     # python code have a permission type for it.

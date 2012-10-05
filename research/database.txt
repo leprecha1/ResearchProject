@@ -2,6 +2,8 @@ mysql -u root
 create database researchproj;
 CTRL-D
 python manage.py syncdb
+py manage.py  schemamigration account --initial
+python manage.py migrate account --fake
 python manage.py shell
 from django.contrib.auth.models import User
 user = User.objects.create_user('admin', 'admin@admin.com', '123456')

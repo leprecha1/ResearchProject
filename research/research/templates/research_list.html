@@ -46,8 +46,12 @@
           </a>
           <a class="brand" href="/">Research Project</a>
           <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="/home/{{user}}">Home</a></li>
+              <ul class="nav">
+              {% if user.is_staff %}
+                <li class="active"><a href="/admin">Home</a></li>
+              {% else %}
+                <li class="active"><a href="/home/{{user}}">Home</a></li>
+              {% endif %}  
               <li><a href="#about">About</a></li>
               <li class="dropdown">
               {% if user.is_staff %}
@@ -161,7 +165,7 @@
         </tbody>
     {% endif %}
     </table>
-    * Count number shows how many people had already answer that research 
+    * Count number shows how many people had already answer that research.
       <!-- Example row of columns -->
     </div>
       <hr>

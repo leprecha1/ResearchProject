@@ -1,7 +1,7 @@
 mysql -u root
 create database researchproj;
 CTRL-D
-(If we already have some tables in database, drop them all)
+(If we already have some tables in database with account_*, drop them all)
 python manage.py syncdb
 python manage.py schemamigration account --initial
 python manage.py migrate

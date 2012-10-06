@@ -111,7 +111,7 @@ def research_edit(request, cookie):
     else:
 	
 	edit_resear = research.objects.get(id=research_id)
-	frm = researchForm(instance=edit_resear) 
+	frm = researchForm(instance=edit_resear)
 
     return render("edit_research.html", {
 		"research": research.objects.get(id=research_id),
@@ -125,6 +125,16 @@ def research_delete(request):
 	research_id = re.sub(r"\/delete",'', research_id)
 	research.objects.get(id=research_id).delete()
 	return HttpResponseRedirect('/research')
+
+@login_required(login_url='/login/')
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def new_question(request):
+	research_id = re.sub(r"\/research\/",'', request.path)
+	research_id = re.sub(r"\/question\/new",'', research_id)
+
+   	return render("add_question.html", {
+    		"research": research.objects.get(id=research_id)
+    }, context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
 def research_answer(request):

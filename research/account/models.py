@@ -1,18 +1,5 @@
 from django.db import models
-
-class actors(models.Model):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    nickname = models.CharField(max_length=30)
-    passwd = models.CharField(max_length=30)
-    email = models.EmailField()
-    rank = models.IntegerField()
-    pub_date = models.DateTimeField('date published')
-    # TODO include a combobox to make possible for admin create more admins
-    # python code have a permission type for it.
-
-    class Meta:
-        app_label = "account"
+from django import forms
 
 class research(models.Model):
     STATUS_CHOICES = (
@@ -33,8 +20,21 @@ class research(models.Model):
     status = models.CharField(max_length=4, choices=STATUS_CHOICES)
     count = models.IntegerField(default=0)
     publish = models.CharField(max_length=4, choices=PUBLISH_CHOICES)
-    # TODO include a combobox to make possible for admin create more admins
-    # python code have a permission type for it.
 
+    class Meta:
+        app_label = "account"
+
+class multiple_choice(models.Model):
+    question = models.CharField(max_length=50)
+    alt_1 = models.CharField(max_length=20)
+    alt_2 = models.CharField(max_length=20)
+    alt_3 = models.CharField(max_length=20)
+
+    class Meta:
+        app_label = "account"
+
+class dissertative(models.Model):
+    question = forms.CharField(max_length=50)
+    answer = forms.CharField(max_length=1000, widget=forms.Textarea)
     class Meta:
         app_label = "account"

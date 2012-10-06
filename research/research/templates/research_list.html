@@ -130,6 +130,8 @@
                     <td>
                         <a href="/research/{{ research.id }}">{{ research.finish_at }}</a>
                     </td>
+
+                {% if research.publish == "F" %}
                     <td>
                         <a href="/research/{{ research.id }}/question/new">Add question</a>
                     </td>
@@ -140,6 +142,7 @@
                         <a href="/research/{{ research.id }}/delete">Remove</a>
                     </td>
                 </tr>
+               {% endif %}
             {% endfor %}
 
         {% else %}

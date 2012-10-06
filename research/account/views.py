@@ -1,5 +1,4 @@
 # Create your views here.
-from account.models import actors
 from account.models import research
 from account.forms import loginForm
 from account.forms import signupForm

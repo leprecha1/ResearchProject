@@ -71,7 +71,10 @@
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
         <h1>Add new question</h1>
-        <p>As admin, you can add some new questions to "{{ research.title}}" research</p>
+        <p>As admin, you can add some new questions to "{{ research.title}}" research</p><br>
+        <p>Choose the type of this new question</p>
+        <input type="radio" name="group1" value="multiple_choice"> Multiple choice<br>
+        <input type="radio" name="group1" value="dissertative" checked> Dissertative question<br>
         <form method="POST">
             {% csrf_token %}
             <br>

@@ -42,8 +42,13 @@
           <a class="brand" href="/">Research Project</a>
           <div class="nav-collapse collapse">
             <div class="navbar-form pull-right">
-            <input type="button" onClick='location.href="/login/"' class="btn" value="Login">
-            <input type="button" onClick='location.href="/signup/"' class="btn" value="Signup">
+   	    {% if user.is_active %}
+	        {{ user }}
+                <input type="button" onClick='location.href="/logout/"' class="btn" value="Logout">
+	    {% else %}
+                <input type="button" onClick='location.href="/login/"' class="btn" value="Login">
+                <input type="button" onClick='location.href="/signup/"' class="btn" value="Signup">
+	    {% endif %}
             </div>
           </div><!--/.nav-collapse -->
         </div>

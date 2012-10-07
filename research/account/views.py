@@ -1,5 +1,7 @@
 # Create your views here.
 from account.models import research
+from account.models import multiple_choice
+from account.models import dissertative
 from account.forms import loginForm
 from account.forms import signupForm
 
@@ -10,6 +12,7 @@ from django.shortcuts import render_to_response as render
 from django.shortcuts import get_object_or_404
 from django.forms import ModelForm
 from django.http import HttpResponseRedirect
+import datetime
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
@@ -29,8 +32,22 @@ class researchForm(ModelForm):
     class Meta:
         model = research
 
+class multForm(ModelForm):
+    class Meta:
+        model = multiple_choice
+
+class dissertativeForm(ModelForm):
+    class Meta:
+        model = dissertative
+
 def home(request):
+    if request.user:
+	user = request.user 
+    else:
+	user = "AnonymousUser"
+    
     return render("index.html", {
+	"user": user,
     }, context_instance=RequestContext(request))
 
 def loginPage(request, cookie):
@@ -131,8 +148,17 @@ def new_question(request):
 	research_id = re.sub(r"\/research\/",'', request.path)
 	research_id = re.sub(r"\/question\/new",'', research_id)
 
+	if request.POST:
+        	frm_diss = dissertativeForm(request.POST)
+		frm_mult = multForm(request.POST) 
+	else:
+        	frm_diss = dissertativeForm()
+		frm_mult = multForm() 
+		
    	return render("add_question.html", {
-    		"research": research.objects.get(id=research_id)
+    		"research": research.objects.get(id=research_id),
+		"multForm": frm_mult,
+		"dissForm": frm_diss,
     }, context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
@@ -167,6 +193,10 @@ def research_new(request):
 
 @login_required(login_url='/login/')
 def research_list(request):
+   
+    now = datetime.datetime.now() 
+    print datetime.datetime.now().strftime("%b. %d,%Y") 
+
     return render("research_list.html", {
             "user": request.user,
             "list_research": research.objects.all(),

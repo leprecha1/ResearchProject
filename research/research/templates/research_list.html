@@ -99,6 +99,7 @@
                 <th style="width:20%;">Status</th>
                 <th style="width:10%;">Published</th>
                 <th style="width:15%;">Expiration date</th>
+                <th style="width:15%;">Get results</th>
                 <th style="width:15%;">Add question</th>
                 <th style="width:5%;">Edit</th>
                 <th style="width:10%;">Remove</th>
@@ -111,38 +112,70 @@
         </tfoot>
         <tbody>
             {% for research in list_research %}
-                <tr>
-                    <td>
-                        <a href="/research/{{ research.id }}">{{ research.title }}</a>
-                    </td>
-                    <td>
-                        {{ research.count }} 
-                    </td>
-                    <td>
-                        {% if research.status == "A" %} Available {% endif %}
-                        {% if research.status == "X" %} Expired {% endif %}
-                        {% if research.status == "E" %} Editing {% endif %}
-                    </td>
-                    <td>
-                        {% if research.publish == "T" %} Yes {% endif %}
-                        {% if research.publish == "F" %} No {% endif %}
-                    </td>
-                    <td>
-                        <a href="/research/{{ research.id }}">{{ research.finish_at }}</a>
-                    </td>
+                {% if not research.id in expiration_list %}
+                    <tr>
+                        <td>
+                            <a href="/research/{{ research.id }}">{{ research.title }}</a>
+                        </td>
+                        <td>
+                            {{ research.count }} 
+                        </td>
+                        <td>
+                            {% if research.status == "A" %} Available {% endif %}
+                            {% if research.status == "X" %} Expired {% endif %}
+                            {% if research.status == "E" %} Editing {% endif %}
+                        </td>
+                        <td>
+                            {% if research.publish == "T" %} Yes {% endif %}
+                            {% if research.publish == "F" %} No {% endif %}
+                        </td>
+                        <td>
+                            <a href="/research/{{ research.id }}">{{ research.finish_at }}</a>
+                        </td>
 
-                {% if research.publish == "F" %}
-                    <td>
-                        <a href="/research/{{ research.id }}/question/new">Add question</a>
-                    </td>
-                    <td>
-                        <a href="/research/{{ research.id }}/edit">Edit</a>
-                    </td>
-                    <td>
-                        <a href="/research/{{ research.id }}/delete">Remove</a>
-                    </td>
-                </tr>
-               {% endif %}
+                    {% if research.publish == "F" %}
+                        <td>
+                        </td>
+                        <td>
+                            <a href="/research/{{ research.id }}/question/new">Add question</a>
+                        </td>
+                        <td>
+                            <a href="/research/{{ research.id }}/edit">Edit</a>
+                        </td>
+                        <td>
+                            <a href="/research/{{ research.id }}/delete">Remove</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% else %}
+                    <tr>
+                        <td>
+                            <a href="/research/{{ research.id }}">{{ research.title }}</a>
+                        </td>
+                        <td>
+                            {{ research.count }} 
+                        </td>
+                        <td>
+                            {% if research.status == "A" %} Available {% endif %}
+                            {% if research.status == "X" %} Expired {% endif %}
+                            {% if research.status == "E" %} Editing {% endif %}
+                        </td>
+                        <td>
+                            {% if research.publish == "T" %} Yes {% endif %}
+                            {% if research.publish == "F" %} No {% endif %}
+                        </td>
+                        <td>
+                            <a href="/research/{{ research.id }}">{{ research.finish_at }}</a>
+                        </td>
+
+                    {% if research.publish == "F" %}
+                        <td>
+                            <a href="/research/{{ research.id }}">Get results</a>
+                        </td>
+                        </tr>
+                    {% endif %}
+
+                {% endif %}
             {% endfor %}
 
         {% else %}

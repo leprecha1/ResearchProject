@@ -102,13 +102,13 @@ def admin(request, cookie):
         frm = loginForm(request.POST)
         if frm.is_valid():
             frm_dict = request.POST
-        else:
-            frm = loginForm()
+    else:
+        frm = loginForm()
 
-        return render("admin.html", {
-            "frm": frm,
-            "user": request.user,
-        }, context_instance=RequestContext(request))
+    return render("admin.html", {
+        "frm": frm,
+        "user": request.user,
+    }, context_instance=RequestContext(request))
 
 @login_required(login_url='/login/')
 @user_passes_test(lambda u: u.is_staff, login_url='/login/')

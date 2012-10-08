@@ -168,7 +168,9 @@
                             <a href="/research/{{ research.id }}">{{ research.finish_at }}</a>
                         </td>
 
-                    {% if research.publish == "F" %}
+                    <! Verifies if research expires and if this research was publish to public, if not publish 
+                   admin doesn't have access to something that never occurs :-) !>
+                    {% if research.publish == "T" %}
                         <td>
                             <a href="/research/{{ research.id }}">Get results</a>
                         </td>

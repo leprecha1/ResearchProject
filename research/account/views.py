@@ -199,6 +199,7 @@ def research_list(request):
     for i in research.objects.all():
         if i.finish_at < now:
             expiration_list.append(i.id)
+            research_exp = research.objects.filter(id=i.id).update(status="X")
 
     return render("research_list.html", {
         "user": request.user,
